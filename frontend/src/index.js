@@ -7,16 +7,29 @@ import CategoriesNavBar from './components/CategoriesNavBar';
 import Category from './components/CategoryView';
 import CategoriesContainer from './container/CategoriesContainer';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
-
-
+import thunkMiddleware from 'redux-thunk'
+import { createLogger } from 'redux-logger'
 import registerServiceWorker from './registerServiceWorker';
-const categories = ['React', 'Angular'];
+
+
+
+const loggerMiddleware = createLogger();
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+
 
 const store = createStore(
-    reducer
+    reducer,
+    composeEnhancers (
+        applyMiddleware(
+            thunkMiddleware,
+            loggerMiddleware
+        )
+    )
 )
 
 
@@ -29,7 +42,7 @@ const App = () => (
             <div>
                 <Header/>
                 <div className="flex-container">
-                    <CategoriesNavBar  className="side-nav" categories={categories}/>
+                    <CategoriesNavBar  className="side-nav"/>
                     <div className="content">
                         <CategoriesContainer />
                     </div>

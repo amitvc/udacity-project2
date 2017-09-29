@@ -3,4 +3,6 @@
  */
 
 
+import {fetchCategories} from './CategoriesAction';
+
 

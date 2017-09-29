@@ -15,7 +15,7 @@ const headers = {
 
 export const getCategories = () =>
     axios.get(`${ROOT_URL}/categories`, { headers })
-    //.then(res => res.json())
+   // .then(res => res.json())
         .then(res => res.data.categories)
 
 

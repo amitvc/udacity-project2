@@ -5,25 +5,29 @@
 import React from 'react';
 import Category from '../components/CategoryView';
 import {connect} from 'react-redux';
-
+import {bindActionCreators} from 'redux';
+import {fetchCategories} from '../actions/index';
 
 /**
  * This container component bootstraps the Categories
  */
-class CategoriesContainer extends React.Component {
+export default class CategoriesContainer extends React.Component {
 
     constructor(props) {
         super(props);
     }
 
+    componentWillMount() {
+       // this.props.fetchCategories();
+    }
+
     render() {
-        const {categories}  = this.props;
+       // const {categories}  = this.props.categories;
+      //  console.log("Cats "+categories);
+
         return (
             <div>
-                {
-                    categories.map((category) => {
-                        return (<Category category={category}/>);
-                    })}
+
             </div>
     );
     }
@@ -34,7 +38,7 @@ class CategoriesContainer extends React.Component {
  * Then these props are passed downed to individual CategoryView.
  * @param state
  * @returns {{categories: *}}
- */
+ *
 const mapStateToProps =  (state) => {
     return {
         categories: state.categories,
@@ -42,4 +46,11 @@ const mapStateToProps =  (state) => {
     };
 }
 
-export default connect(mapStateToProps)(CategoriesContainer);
+const mapDispatchToProps = (dispatch) => {
+    return {
+            fetchCategories: bindActionCreators(fetchCategories, dispatch)
+    }
+}
+ */
+
+//export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)

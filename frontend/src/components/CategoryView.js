@@ -26,14 +26,13 @@ class CategoryView extends React.Component {
         };
     }
 
-    render() {
-
+    renderCategory () {
         return (
+
             <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
                 <CardHeader
-                    title={this.props.category.title}
-                    subtitle={`Contains ${this.props.posts.length}`}
-
+                    title={this.props.category.name}
+                    subtitle={`Contains`}
                     actAsExpander={true}
                     showExpandableButton={true}
                 />
@@ -46,6 +45,17 @@ class CategoryView extends React.Component {
                 </CardActions>
             </Card>
         );
+    }
+
+    render() {
+        let category = null;
+        if(this.props.category.visibility) {
+            category = this.renderCategory()
+        }
+
+        return (
+            category
+            )
     }
 }
 

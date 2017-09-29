@@ -4,12 +4,15 @@
 
 import React from 'react';
 import {List, ListItem} from 'material-ui/List';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {fetchCategories, fetchPostsByCategory,displayDefaultCategory} from '../actions/CategoriesAction';
 
 
 /**
  * Container component which displays the categories as navigation list
  */
-export default class CategoriesNavBar extends React.Component {
+class CategoriesNavBar extends React.Component {
 
 
 
@@ -17,17 +20,32 @@ export default class CategoriesNavBar extends React.Component {
         super(props);
     }
 
-    onCategoryChange() {
-
+    onCategoryChange = (event) => {
+        console.log("On change clicked " + event.target.innerText);
     }
 
+    componentWillMount() {
+        this.props.fetchCategories().then(() => {
+            this.props.displayDefaultCategory()
+        })
+    }
+
+    componentDidMount() {
+    }
+
+
+
+
     render(){
+        const {categories}  = this.props.categories;
+
+
         return (
         <nav>
             <List className="nav-side-bar">
-                {this.props.categories.map((cat) => {
+                {categories.map((cat) => {
                     return (
-                        <ListItem primaryText={cat} onClick={this.onCategoryChange}/>
+                        <ListItem key={cat.name} primaryText={cat.name} onClick={this.onCategoryChange}/>
                     );
                 })}
             </List>
@@ -37,3 +55,26 @@ export default class CategoriesNavBar extends React.Component {
         )
     }
 }
+
+/**
+ * Mapping the Categories from the state to this controls props.
+ * Then these props are passed downed to individual CategoryView.
+ * @param state
+ * @returns {{categories: *}}
+ */
+const mapStateToProps =  (state) => {
+    return {
+        categories: state.categories,
+    };
+}
+
+const mapDispatchToProps = (dispatch, state) => {
+    return {
+        fetchCategories: bindActionCreators(fetchCategories, dispatch),
+        fetchPostsByCategory: bindActionCreators(fetchPostsByCategory, dispatch),
+        displayDefaultCategory: bindActionCreators(displayDefaultCategory, dispatch, state)
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesNavBar)

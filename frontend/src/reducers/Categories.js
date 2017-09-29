@@ -2,34 +2,32 @@
  * Created by amit on 9/24/17.
  */
 
-import {LOAD_CATEGORIES} from '../actions/Constants';
+import {LOAD_CATEGORIES, SELECT_CATEGORY} from '../actions/Constants';
 
-const initialCategoriesState = [
 
-    {
-        id: 11111,
-        title:"react"
-    },
-    {
-        id: 22222,
-        title:"redux"
-    },
-    {
-        id: 33333,
-        title:"udacity"
-    },
 
-];
+const initialCategoriesState = {
+    categories:[],
+    selectedCategory: undefined
+
+};
 
 function categories (state = initialCategoriesState, action) {
 
     switch (action.type) {
-
-
         case LOAD_CATEGORIES:
+            let {categories} = action;
             return {
+                categories
+            }
+            break;
+
+        case SELECT_CATEGORY:
+            let {category} = action;
+
+            return  {
                 ...state,
-                categories: action.categories
+                selectedCategory : category
             }
 
         default:
