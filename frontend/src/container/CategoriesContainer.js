@@ -18,7 +18,9 @@ class CategoriesContainer extends React.Component {
     }
 
     componentWillMount() {
-        this.props.fetchPostsByCategory(this.props.selectedCategory);
+        if(this.props.selectedCategory) {
+            this.props.fetchPostsByCategory(this.props.selectedCategory);
+        }
     }
 
     render() {

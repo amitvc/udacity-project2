@@ -20,6 +20,7 @@ class CategoriesNavBar extends React.Component {
 
     onCategoryChange = (event) => {
         console.log("On change clicked " + event.target.innerText);
+        this.props.fetchPostsByCategory(event.target.innerText);
     }
 
     componentWillMount() {
@@ -30,18 +31,26 @@ class CategoriesNavBar extends React.Component {
     }
 
     render(){
-        const {categories}  = this.props.categories;
-        if(categories == undefined || categories.length  == 0) {
-            return (<nav></nav>)
+        const {categories}  = this.props;
+
+        if(categories == undefined || categories.length == 0) {
+            return (
+                <nav>
+                    <List className="nav-side-bar"/>
+                </nav>
+            )
         }
         return (
         <nav>
             <List className="nav-side-bar">
-                {categories.map((cat) => {
-                    return (
-                        <ListItem key={cat.name} primaryText={cat.name} onClick={this.onCategoryChange}/>
-                    );
-                })}
+                {
+                    categories.map((cat) => {
+                        return (
+                            <ListItem key={cat.name} primaryText={cat.name} onClick={this.onCategoryChange}/>
+                        );
+                    })
+
+                }
             </List>
         </nav>
 
@@ -58,7 +67,8 @@ class CategoriesNavBar extends React.Component {
  */
 const mapStateToProps =  (state) => {
     return {
-        categories: state.categories,
+        categories: state.categories.categories,
+        selectedCategory : state.categories.selectedCategory
     };
 }
 

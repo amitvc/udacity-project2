@@ -4,7 +4,8 @@
 
 
 import {getCategories, getPostsByCategory} from '../api';
-import {LOAD_CATEGORIES,SELECT_CATEGORY} from '../actions/Constants';
+import {LOAD_CATEGORIES, LOAD_SELECTED_CATEGORY,LOAD_SELECTED_CATEGORY_POSTS} from '../actions/Constants';
+import {loadPostsBySelectedCategory} from '../actions/PostsAction';
 
 
 export const fetchCategories = () => (dispatch) => {
@@ -18,24 +19,34 @@ export const fetchCategories = () => (dispatch) => {
 
 export const displayDefaultCategory = () => (dispatch, getState) => {
     const state = getState();
-    const categories = state.categories;
+    const {categories} = state.categories;
     if(categories != undefined && categories.length > 0) {
-        state.selectedCategory = categories[0].name;
-        fetchPostsByCategory(state.selectedCategory);
+        categories.selectedCategory = categories[0].name;
+        dispatch(fetchPostsByCategory(categories.selectedCategory));
     }
 }
 
 export const fetchPostsByCategory = (selectedCategory) => (dispatch) => {
+    console.log("Selected category " + selectedCategory);
     return getPostsByCategory(selectedCategory)
-        .then(posts => dispatch({
-            type: SELECT_CATEGORY,
-            selectedCategory,
-            posts
-        }))
+        .then( (posts) =>  {
+            dispatch(selectCategory(selectedCategory));
+            console.log("Calling loadPostsBySelectedCategory " + JSON.stringify(posts));
+            dispatch(loadPostsBySelectedCategory(posts))
+
+        });
 }
 
 
-export default function loadCategory(categories) {
+export const  selectCategory = (selectedCategory)  => {
+    return {
+        type: LOAD_SELECTED_CATEGORY,
+        selectedCategory
+    }
+}
+
+
+export const  loadCategory= (categories) => {
     console.log("loadCat");
     return {
         type: LOAD_CATEGORIES,
