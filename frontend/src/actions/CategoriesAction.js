@@ -7,16 +7,18 @@ import {getCategories, getPostsByCategory} from '../api';
 import {LOAD_CATEGORIES,SELECT_CATEGORY} from '../actions/Constants';
 
 
-export const fetchCategories = () => (dispatch) => (
-    getCategories()
+export const fetchCategories = () => (dispatch) => {
+    console.log("Calling fetchCat");
+    return getCategories()
         .then((categories) => {
-             dispatch(loadCategory(categories));
+            console.log("Categories" + categories);
+            dispatch(loadCategory(categories));
         })
-);
+}
 
 export const displayDefaultCategory = () => (dispatch, getState) => {
     const state = getState();
-    const categories = state.categories.categories;
+    const categories = state.categories;
     if(categories != undefined && categories.length > 0) {
         state.selectedCategory = categories[0].name;
         fetchPostsByCategory(state.selectedCategory);
@@ -24,7 +26,6 @@ export const displayDefaultCategory = () => (dispatch, getState) => {
 }
 
 export const fetchPostsByCategory = (selectedCategory) => (dispatch) => {
-    console.log("Calling fetchPostsByCategories");
     return getPostsByCategory(selectedCategory)
         .then(posts => dispatch({
             type: SELECT_CATEGORY,
@@ -35,6 +36,7 @@ export const fetchPostsByCategory = (selectedCategory) => (dispatch) => {
 
 
 export default function loadCategory(categories) {
+    console.log("loadCat");
     return {
         type: LOAD_CATEGORIES,
         categories

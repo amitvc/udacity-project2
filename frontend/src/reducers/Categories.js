@@ -6,19 +6,16 @@ import {LOAD_CATEGORIES, SELECT_CATEGORY} from '../actions/Constants';
 
 
 
-const initialCategoriesState = {
-    categories:[],
-    selectedCategory: undefined
+const initialCategories = [];
 
-};
-
-function categories (state = initialCategoriesState, action) {
+function categories (state = initialCategories, action) {
 
     switch (action.type) {
         case LOAD_CATEGORIES:
             let {categories} = action;
             return {
-                categories
+                ...state,
+                categories: categories
             }
             break;
 

@@ -4,30 +4,29 @@
 
 import React from 'react';
 import Category from '../components/CategoryView';
+import {fetchPostsByCategory} from '../actions/CategoriesAction';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchCategories} from '../actions/index';
 
 /**
  * This container component bootstraps the Categories
  */
-export default class CategoriesContainer extends React.Component {
+class CategoriesContainer extends React.Component {
 
     constructor(props) {
         super(props);
     }
 
     componentWillMount() {
-       // this.props.fetchCategories();
+        this.props.fetchPostsByCategory(this.props.selectedCategory);
     }
 
     render() {
-       // const {categories}  = this.props.categories;
-      //  console.log("Cats "+categories);
-
+        const {posts, selectedCategory} = this.props;
+        const category = {name:posts.name};
         return (
             <div>
-
+                <Category category={category}/>
             </div>
     );
     }
@@ -38,19 +37,20 @@ export default class CategoriesContainer extends React.Component {
  * Then these props are passed downed to individual CategoryView.
  * @param state
  * @returns {{categories: *}}
- *
+ */
 const mapStateToProps =  (state) => {
+    console.log("State " + state);
     return {
-        categories: state.categories,
+        selectedCategory: state.selectedCategory,
         posts : state.posts
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-            fetchCategories: bindActionCreators(fetchCategories, dispatch)
+        fetchPostsByCategory : bindActionCreators(fetchPostsByCategory, dispatch)
     }
 }
- */
 
-//export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)

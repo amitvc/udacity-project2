@@ -14,8 +14,6 @@ import {fetchCategories, fetchPostsByCategory,displayDefaultCategory} from '../a
  */
 class CategoriesNavBar extends React.Component {
 
-
-
     constructor(props) {
         super(props);
     }
@@ -26,20 +24,16 @@ class CategoriesNavBar extends React.Component {
 
     componentWillMount() {
         this.props.fetchCategories().then(() => {
+            console.log("Now calling displayDefaultCategory");
             this.props.displayDefaultCategory()
         })
     }
 
-    componentDidMount() {
-    }
-
-
-
-
     render(){
         const {categories}  = this.props.categories;
-
-
+        if(categories == undefined || categories.length  == 0) {
+            return (<nav></nav>)
+        }
         return (
         <nav>
             <List className="nav-side-bar">
