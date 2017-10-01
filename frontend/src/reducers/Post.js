@@ -14,7 +14,6 @@ function posts (state = initialPostState, action) {
 
         case LOAD_SELECTED_CATEGORY_POSTS:
             const posts = action.posts;
-            console.log("Inside "+JSON.stringify(action.posts) + " posts "+ JSON.stringify(posts));
             return {
                 ...state,
                 posts:posts

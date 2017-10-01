@@ -5,8 +5,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import {Card, CardHeader} from 'material-ui/Card';
+
+import  PostView from './PostView';
 
 
 
@@ -16,7 +17,7 @@ import FlatButton from 'material-ui/FlatButton';
 class CategoryView extends React.Component {
 
     static propTypes = {
-        category : PropTypes.object
+        numberOfPosts : PropTypes.number
     }
 
     constructor(props) {
@@ -27,22 +28,22 @@ class CategoryView extends React.Component {
     }
 
     renderCategory () {
+        const {posts} = this.props;
         return (
-
             <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
                 <CardHeader
-                    title={this.props.category.name}
-                    subtitle={`Contains`}
-                    actAsExpander={true}
-                    showExpandableButton={true}
+                    title={this.props.category}
+                    subtitle={`Contains  ${this.props.numberOfPosts}   posts`}
+                    subtitleColor="red"
                 />
-                <CardText>
-                    Hello
-                </CardText>
-                <CardActions>
-                    <FlatButton label="Expand" onClick={this.handleExpand} />
-                    <FlatButton label="Reduce" onClick={this.handleReduce} />
-                </CardActions>
+                {
+                    posts.map((post) => {
+                        return (
+                            <PostView post={post} key={post.id}/>
+                        );
+                    })
+
+                }
             </Card>
         );
     }

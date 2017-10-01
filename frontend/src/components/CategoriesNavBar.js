@@ -14,18 +14,12 @@ import {fetchCategories, fetchPostsByCategory,displayDefaultCategory} from '../a
  */
 class CategoriesNavBar extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     onCategoryChange = (event) => {
-        console.log("On change clicked " + event.target.innerText);
         this.props.fetchPostsByCategory(event.target.innerText);
     }
 
     componentWillMount() {
         this.props.fetchCategories().then(() => {
-            console.log("Now calling displayDefaultCategory");
             this.props.displayDefaultCategory()
         })
     }
@@ -33,7 +27,7 @@ class CategoriesNavBar extends React.Component {
     render(){
         const {categories}  = this.props;
 
-        if(categories == undefined || categories.length == 0) {
+        if(categories === undefined || categories.length === 0) {
             return (
                 <nav>
                     <List className="nav-side-bar"/>

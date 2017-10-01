@@ -2,7 +2,7 @@
  * Created by amit on 9/24/17.
  */
 
-import {LOAD_CATEGORIES, LOAD_SELECTED_CATEGORY_POSTS,LOAD_SELECTED_CATEGORY} from '../actions/Constants';
+import {LOAD_CATEGORIES,LOAD_SELECTED_CATEGORY} from '../actions/Constants';
 
 
 

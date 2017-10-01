@@ -7,15 +7,14 @@ import Category from '../components/CategoryView';
 import {fetchPostsByCategory} from '../actions/CategoriesAction';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import PostAddButton from '../components/PostAddButton';
+import PostSortButton from '../components/PostSortButton';
+
 
 /**
  * This container component bootstraps the Categories
  */
 class CategoriesContainer extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     componentWillMount() {
         if(this.props.selectedCategory) {
@@ -25,10 +24,29 @@ class CategoriesContainer extends React.Component {
 
     render() {
         const {posts, selectedCategory} = this.props;
-        const category = {name:posts.name};
+        if(posts === undefined || posts.length === 0) {
+            return (<null></null>);
+        }
         return (
             <div>
-                <Category category={category}/>
+                {
+                    <div>
+                        <Category category={selectedCategory} numberOfPosts={posts.length} posts={posts}/>
+                        <PostAddButton style={{marginRight: 22,
+                            position: 'fixed',
+                            bottom: 25,
+                            right: 25}}/>
+                        <PostSortButton style={{marginRight: 22,
+                            position: 'fixed',
+                            bottom: 25,
+                            right: 85}}/>
+                        <PostSortButton style={{marginRight: 22,
+                            position: 'fixed',
+                            bottom: 25,
+                            right: 145}}/>
+                    </div>
+
+                }
             </div>
     );
     }
@@ -41,10 +59,9 @@ class CategoriesContainer extends React.Component {
  * @returns {{categories: *}}
  */
 const mapStateToProps =  (state) => {
-    console.log("State " + state);
     return {
-        selectedCategory: state.selectedCategory,
-        posts : state.posts
+        selectedCategory: state.categories.selectedCategory,
+        posts : state.posts.posts
     };
 }
 
