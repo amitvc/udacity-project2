@@ -44,10 +44,11 @@ export const editPost = ({id, title, body}) =>
     axios.put(`${ROOT_URL}/posts/${id}`, {
             title,
             body,
-            timestamp: Date.now()
+            timestamp: Date.now() // Time when post was last updated
         },
         { headers })
         .then(res => res.data)
+
 
 export const deletePost = (id) =>
     axios.delete(`${ROOT_URL}/posts/${id}`, { headers })
@@ -56,3 +57,12 @@ export const getPost = (id) =>
     axios.get(`${ROOT_URL}/posts/${id}`, { headers })
         .then(res => res.data)
 
+
+export const votePost = (id, option) =>
+    axios.post(`${ROOT_URL}/posts/${id}`, { option },
+        {
+            headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+            }})
+        .then(res => res.data)

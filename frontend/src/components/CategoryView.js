@@ -49,14 +49,7 @@ class CategoryView extends React.Component {
     }
 
     render() {
-        let category = null;
-        //if(this.props.category.visibility) {
-            category = this.renderCategory()
-       // }
-
-        return (
-            category
-            )
+        return (this.renderCategory());
     }
 }
 
