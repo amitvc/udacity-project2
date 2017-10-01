@@ -25,7 +25,18 @@ class CategoriesContainer extends React.Component {
     render() {
         const {posts, selectedCategory} = this.props;
         if(posts === undefined || posts.length === 0) {
-            return (<null></null>);
+            return (<div><PostAddButton style={{marginRight: 22,
+                position: 'fixed',
+                bottom: 25,
+                right: 25}}/>
+                <PostSortButton style={{marginRight: 22,
+                    position: 'fixed',
+                    bottom: 25,
+                    right: 85}}/>
+                <PostSortButton style={{marginRight: 22,
+                    position: 'fixed',
+                    bottom: 25,
+                    right: 145}}/></div>);
         }
         return (
             <div>
