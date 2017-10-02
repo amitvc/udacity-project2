@@ -5,11 +5,13 @@
 import React from 'react';
 import Category from '../components/CategoryView';
 import {fetchPostsByCategory} from '../actions/CategoriesAction';
+import {openCreateNewPostDialog} from '../actions/PostsAction';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import PostAddButton from '../components/PostAddButton';
 import PostSortButton from '../components/PostSortButton';
 import EditPostDialog from '../components/EditPostDialog';
+import CreatePostDialog from '../components/CreatePostDialog';
 
 
 /**
@@ -23,13 +25,17 @@ class CategoriesContainer extends React.Component {
         }
     }
 
+
     render() {
-        const {posts, selectedCategory, openPostDialog} = this.props;
+        const {posts, selectedCategory, openPostDialog, openCreatePostDialog,openCreateNewPostDialog} = this.props;
         if(posts === undefined || posts.length === 0) {
-            return (<div><PostAddButton style={{marginRight: 22,
-                position: 'fixed',
-                bottom: 25,
-                right: 25}}/>
+            return (<div>
+                <PostAddButton
+                    openCreatePostDialog={this.openCreatePostDialog}
+                    style={{marginRight: 22,
+                    position: 'fixed',
+                    bottom: 25,
+                    right: 25}}/>
                 <PostSortButton style={{marginRight: 22,
                     position: 'fixed',
                     bottom: 25,
@@ -45,7 +51,12 @@ class CategoriesContainer extends React.Component {
                     <div>
                         <Category category={selectedCategory} numberOfPosts={posts.length} posts={posts}/>
                         <EditPostDialog open={openPostDialog}/>
-                        <PostAddButton style={{marginRight: 22,
+                        <CreatePostDialog open={openCreatePostDialog}/>
+                        <PostAddButton
+                            openCreatePostDialog={()=>{
+                                openCreateNewPostDialog();
+                            }}
+                            style={{marginRight: 22,
                             position: 'fixed',
                             bottom: 25,
                             right: 25}}/>
@@ -76,6 +87,7 @@ const mapStateToProps =  (state) => {
         selectedCategory: state.categories.selectedCategory,
         posts : state.posts.posts,
         openPostDialog: state.posts.openPostDialog,
+        openCreatePostDialog: state.posts.openCreatePostDialog,
         author: state.posts.author,
         body : state.posts.body,
         title : state.posts.title
@@ -84,7 +96,8 @@ const mapStateToProps =  (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPostsByCategory : bindActionCreators(fetchPostsByCategory, dispatch)
+        fetchPostsByCategory : bindActionCreators(fetchPostsByCategory, dispatch),
+        openCreateNewPostDialog : bindActionCreators(openCreateNewPostDialog, dispatch)
     }
 }
 

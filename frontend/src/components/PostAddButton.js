@@ -13,7 +13,7 @@ class PostAddButton extends React.Component {
 
     render() {
         return (
-            <FloatingActionButton
+            <FloatingActionButton onClick={this.props.openCreatePostDialog}
                 style={this.props.style}>
                 <ContentAdd />
             </FloatingActionButton>

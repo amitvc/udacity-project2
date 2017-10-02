@@ -6,11 +6,13 @@ import {LOAD_SELECTED_CATEGORY_POSTS,
         OPEN_EDIT_POST,
         POST_DIALOG_CLOSED_CLICKED,
         UP_VOTE_POST, DOWN_VOTE_POST,
-        UPDATE_POST,DELETE_POST} from './Constants';
+        UPDATE_POST,DELETE_POST,
+        CREATE_NEW_POST, OPEN_CREATE_POST_DIALOG} from './Constants';
 import {
     votePost,
     editPost,
-    deletePost
+    deletePost,
+    createPost
 } from '../api';
 
 
@@ -61,6 +63,26 @@ export const updatePostOnServer = (id, title, body) => dispatch => {
             dispatch(onPostDialogClosed());
         });
 }
+
+export const createPostOnServer = (post) => dispatch => {
+    createPost(post).then( post => {
+        dispatch(createNewPost(post));
+    });
+}
+
+export const createNewPost = (post) => {
+    return {
+        type:CREATE_NEW_POST,
+        post
+    }
+}
+
+export const openCreateNewPostDialog = () => {
+    return {
+        type:OPEN_CREATE_POST_DIALOG
+    }
+}
+
 
 export const deletePostOnServer = (id) => dispatch => {
     deletePost(id)

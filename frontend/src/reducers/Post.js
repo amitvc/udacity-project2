@@ -4,12 +4,14 @@
 import {LOAD_SELECTED_CATEGORY_POSTS,
         OPEN_EDIT_POST,POST_DIALOG_CLOSED_CLICKED,
         UP_VOTE_POST,DOWN_VOTE_POST,
-        UPDATE_POST, DELETE_POST} from '../actions/Constants';
+        UPDATE_POST, DELETE_POST,
+        CREATE_NEW_POST, OPEN_CREATE_POST_DIALOG} from '../actions/Constants';
 import {votePost} from '../api/index'
 
 const initialPostState =  {
     posts : [],
     openPostDialog : false,
+    openCreatePostDialog : false,
     id: "",
     author:"",
     body:"",
@@ -41,7 +43,8 @@ function posts (state = initialPostState, action) {
         case POST_DIALOG_CLOSED_CLICKED:
             return {
                 ...state,
-                openPostDialog:false
+                openPostDialog:false,
+                openCreatePostDialog:false
             };
 
         case UP_VOTE_POST:
@@ -73,6 +76,20 @@ function posts (state = initialPostState, action) {
             return {
                 ...state,
                 posts:newPosts
+            };
+
+        case CREATE_NEW_POST:
+            newPosts = state.posts.filter((post) => post.id !== action.post.id);
+            newPosts.push(action.post);
+            return {
+                ...state,
+                posts: newPosts
+            };
+
+        case OPEN_CREATE_POST_DIALOG:
+            return {
+                ...state,
+                openCreatePostDialog:true
             }
 
         default:
