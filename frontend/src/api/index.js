@@ -40,11 +40,11 @@ export const createPost = (post) =>
             }})
         .then(res => res.data)
 
-export const editPost = ({id, title, body}) =>
+export const editPost = (id, title, body) =>
     axios.put(`${ROOT_URL}/posts/${id}`, {
             title,
             body,
-            timestamp: Date.now() // Time when post was last updated
+            timestamp: Date.now()
         },
         { headers })
         .then(res => res.data)

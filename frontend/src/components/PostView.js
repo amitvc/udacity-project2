@@ -33,7 +33,6 @@ class PostView extends React.Component {
 
         const {post} = this.props;
         const timeAgo = TimeAgo();
-        console.log("Props " + this.props);
         return (
         <Card>
             <CardHeader title={`Post : ${post.title}`}/>

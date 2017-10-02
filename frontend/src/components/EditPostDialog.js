@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField';
-import {onPostDialogClosed} from '../actions/PostsAction';
+import {onPostDialogClosed,updatePostOnServer} from '../actions/PostsAction';
 import {bindActionCreators} from 'redux';
 
 
@@ -25,7 +25,7 @@ class PostDialog extends React.Component {
 
 
     render() {
-        const {title, body, author, openPostDialog, onPostDialogClosed}  = this.props;
+        const {id, title, body, openPostDialog, onPostDialogClosed, updatePostOnServer}  = this.props;
 
         return (
             <Dialog
@@ -36,12 +36,14 @@ class PostDialog extends React.Component {
                 autoScrollBodyContent={true}
                 modal={false}>
                 <TextField
+                    ref="title"
                     required autoFocus
                     floatingLabelText="Title"
                     defaultValue={title}
                 />
                 <br/>
                 <TextField
+                    ref="body"
                     required fullWidth
                     floatingLabelText="Body"
                     defaultValue={body}
@@ -50,16 +52,11 @@ class PostDialog extends React.Component {
                     rowsMax={2}
                 />
                 <br/>
-                <TextField
-                    required fullWidth
-                    floatingLabelText="Author"
-                    defaultValue={author}
-                />
-                <br />
                 <RaisedButton
                     label='Submit'
                     primary={true}
                     keyboardFocused={true}
+                    onClick={() => {updatePostOnServer(id, this.refs.title.getValue(),this.refs.body.getValue())}}
                 />
                 <RaisedButton
                     label='Cancel'
@@ -77,14 +74,15 @@ const mapStateToProps =  (state) => {
         openPostDialog: state.posts.openPostDialog,
         title : state.posts.title,
         body: state.posts.body,
-        author: state.posts.author
+        id : state.posts.id
     };
 }
 
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onPostDialogClosed: bindActionCreators(onPostDialogClosed, dispatch)
+        onPostDialogClosed: bindActionCreators(onPostDialogClosed, dispatch),
+        updatePostOnServer: bindActionCreators(updatePostOnServer, dispatch)
     }
 }
 

@@ -52,9 +52,14 @@ export const updateDownVotePost = (id) => dispatch => {
 }
 
 
-export const updatePost = (id, title, body) => dispatch => {
+export const updatePostOnServer = (id, title, body) => dispatch => {
+
     editPost(id, title,body)
-        .then(post => dispatch(updatePostLocal(post)));
+        .then(post => {
+            console.log(post);
+            dispatch(updatePostLocal(post));
+            dispatch(onPostDialogClosed());
+        });
 }
 
 export const deletePostOnServer = (id) => dispatch => {

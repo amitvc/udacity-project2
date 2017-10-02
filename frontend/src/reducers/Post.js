@@ -10,6 +10,7 @@ import {votePost} from '../api/index'
 const initialPostState =  {
     posts : [],
     openPostDialog : false,
+    id: "",
     author:"",
     body:"",
     title:"",
@@ -33,7 +34,8 @@ function posts (state = initialPostState, action) {
                 openPostDialog: true,
                 author:post.author,
                 title:post.title,
-                body:post.body
+                body:post.body,
+                id: post.id
             };
 
         case POST_DIALOG_CLOSED_CLICKED:
