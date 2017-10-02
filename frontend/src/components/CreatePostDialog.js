@@ -20,12 +20,12 @@ class CreatePostDialog extends React.Component {
 
     render() {
 
-        const {openCreatePostDialog,onPostDialogClosed} = this.props;
+        const {openPostCreateDialogFlag,onPostDialogClosed, createPostOnServer} = this.props;
 
         return (
             <Dialog
                 title="Create Post"
-                open={openCreatePostDialog}
+                open={openPostCreateDialogFlag}
                 autoDetectWindowHeight={true}
                 onRequestClose={onPostDialogClosed}
                 autoScrollBodyContent={true}
@@ -63,7 +63,7 @@ class CreatePostDialog extends React.Component {
                             body: this.refs.body.getValue(),
                             category: this.props.selectedCategory
                         }
-                        console.log(post);
+                        console.log("About to create post " +JSON.stringify(post));
                         createPostOnServer(post);
                     }}
                 />
@@ -81,7 +81,7 @@ class CreatePostDialog extends React.Component {
 const mapStateToProps = (state) => {
     return {
         selectedCategory: state.categories.selectedCategory,
-        openCreatePostDialog : state.posts.openCreatePostDialog
+        openPostCreateDialogFlag : state.posts.openPostCreateDialogFlag
     }
 }
 

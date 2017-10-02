@@ -25,12 +25,12 @@ class PostDialog extends React.Component {
 
 
     render() {
-        const {id, title, body, openPostDialog, onPostDialogClosed, updatePostOnServer}  = this.props;
+        const {id, title, body, openPostEditDialogFlag, onPostDialogClosed, updatePostOnServer}  = this.props;
 
         return (
             <Dialog
                 title="Edit Post"
-                open={openPostDialog}
+                open={openPostEditDialogFlag}
                 autoDetectWindowHeight={true}
                 onRequestClose={onPostDialogClosed}
                 autoScrollBodyContent={true}
@@ -71,7 +71,7 @@ class PostDialog extends React.Component {
 
 const mapStateToProps =  (state) => {
     return {
-        openPostDialog: state.posts.openPostDialog,
+        openPostEditDialogFlag: state.posts.openPostEditDialogFlag,
         title : state.posts.title,
         body: state.posts.body,
         id : state.posts.id

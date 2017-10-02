@@ -66,7 +66,9 @@ export const updatePostOnServer = (id, title, body) => dispatch => {
 
 export const createPostOnServer = (post) => dispatch => {
     createPost(post).then( post => {
+        console.log("Post created on Server");
         dispatch(createNewPost(post));
+        dispatch(onPostDialogClosed());
     });
 }
 

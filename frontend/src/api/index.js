@@ -37,7 +37,8 @@ export const createPost = (post) =>
             headers: {
                 ...headers,
                 'Content-Type': 'application/json'
-            }})
+            }
+        })
         .then(res => res.data)
 
 export const editPost = (id, title, body) =>

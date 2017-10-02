@@ -27,31 +27,15 @@ class CategoriesContainer extends React.Component {
 
 
     render() {
-        const {posts, selectedCategory, openPostDialog, openCreatePostDialog,openCreateNewPostDialog} = this.props;
-        if(posts === undefined || posts.length === 0) {
-            return (<div>
-                <PostAddButton
-                    openCreatePostDialog={this.openCreatePostDialog}
-                    style={{marginRight: 22,
-                    position: 'fixed',
-                    bottom: 25,
-                    right: 25}}/>
-                <PostSortButton style={{marginRight: 22,
-                    position: 'fixed',
-                    bottom: 25,
-                    right: 85}}/>
-                <PostSortButton style={{marginRight: 22,
-                    position: 'fixed',
-                    bottom: 25,
-                    right: 145}}/></div>);
-        }
+        const {posts, selectedCategory, openPostCreateDialogFlag, openPostEditDialogFlag,openCreateNewPostDialog} = this.props;
+
         return (
             <div>
                 {
                     <div>
                         <Category category={selectedCategory} numberOfPosts={posts.length} posts={posts}/>
-                        <EditPostDialog open={openPostDialog}/>
-                        <CreatePostDialog open={openCreatePostDialog}/>
+                        <EditPostDialog open={openPostEditDialogFlag}/>
+                        <CreatePostDialog open={openPostCreateDialogFlag}/>
                         <PostAddButton
                             openCreatePostDialog={()=>{
                                 openCreateNewPostDialog();
@@ -86,8 +70,8 @@ const mapStateToProps =  (state) => {
     return {
         selectedCategory: state.categories.selectedCategory,
         posts : state.posts.posts,
-        openPostDialog: state.posts.openPostDialog,
-        openCreatePostDialog: state.posts.openCreatePostDialog,
+        openPostEditDialogFlag: state.posts.openPostEditDialogFlag,
+        openPostCreateDialogFlag: state.posts.openPostCreateDialogFlag,
         author: state.posts.author,
         body : state.posts.body,
         title : state.posts.title

@@ -10,8 +10,8 @@ import {votePost} from '../api/index'
 
 const initialPostState =  {
     posts : [],
-    openPostDialog : false,
-    openCreatePostDialog : false,
+    openPostEditDialogFlag : false,
+    openPostCreateDialogFlag : false,
     id: "",
     author:"",
     body:"",
@@ -33,7 +33,7 @@ function posts (state = initialPostState, action) {
             const post = action.post;
             return {
                 ...state,
-                openPostDialog: true,
+                openPostEditDialogFlag: true,
                 author:post.author,
                 title:post.title,
                 body:post.body,
@@ -43,8 +43,8 @@ function posts (state = initialPostState, action) {
         case POST_DIALOG_CLOSED_CLICKED:
             return {
                 ...state,
-                openPostDialog:false,
-                openCreatePostDialog:false
+                openPostEditDialogFlag:false,
+                openPostCreateDialogFlag:false
             };
 
         case UP_VOTE_POST:
@@ -89,7 +89,7 @@ function posts (state = initialPostState, action) {
         case OPEN_CREATE_POST_DIALOG:
             return {
                 ...state,
-                openCreatePostDialog:true
+                openPostCreateDialogFlag:true
             }
 
         default:
