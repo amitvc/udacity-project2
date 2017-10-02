@@ -67,3 +67,47 @@ export const votePost = (id, option) =>
                 'Content-Type': 'application/json'
             }})
         .then(res => res.data)
+
+
+////Section for comments api -- add, delete, vote, update
+export const voteComment = (id, option) =>
+    axios.post(`${ROOT_URL}/comments/${id}`, { option },
+        {
+            headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+            }})
+        .then(res => res.data)
+
+export const getComments = (postId) =>
+    axios.get(`${ROOT_URL}/posts/${postId}/comments`, { headers })
+        .then(res => res.data)
+
+export const createComment = (comment) =>
+    axios.post(`${ROOT_URL}/comments`,
+        {
+            ...comment,
+            id: uuid(),
+            timestamp: Date.now()
+        },
+        {
+            headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+            }})
+        .then(res => res.data)
+
+export const editComment = (id, body) =>
+    axios.put(`${ROOT_URL}/comments/${id}`, {
+            body,
+            timestamp: Date.now()
+        },
+        {
+            headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+            }})
+        .then(res => res.data)
+
+export const deleteComment = (id) =>
+    axios.delete(`${ROOT_URL}/comments/${id}`, { headers })

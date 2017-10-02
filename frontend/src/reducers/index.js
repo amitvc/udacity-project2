@@ -3,10 +3,12 @@
  */
 
 import {combineReducers} from 'redux';
-import categories from './Categories';
-import posts from './Post';
+import categories from './CategoriesReducer';
+import posts from './PostReducer';
+import comments from './CommentsReducer';
 
 export default combineReducers({
     categories,
     posts,
+    comments
 });

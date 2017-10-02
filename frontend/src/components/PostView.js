@@ -11,9 +11,8 @@ import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {onEditPostClicked, updateUpVotePost, updateDownVotePost, deletePostOnServer} from '../actions/PostsAction';
-
-
-
+import {getCommentsFromServer} from '../actions/CommentsAction';
+import CommentView from './CommentView';
 import TimeAgo from 'time-ago';
 
 
@@ -28,11 +27,15 @@ class PostView extends React.Component {
         this.props.deletePostOnServer(this.props.post.id);
     }
 
+    componentWillMount () {
+        this.props.getCommentsFromServer(this.props.post.id);
+    }
+
 
     render() {
-
         const {post} = this.props;
         const timeAgo = TimeAgo();
+        const {comments} = this.props.comments;
         return (
         <Card>
             <CardHeader title={`Post : ${post.title}`}/>
@@ -54,6 +57,15 @@ class PostView extends React.Component {
                     <ActionThumbDown />
                 </FloatingActionButton>
             </CardActions>
+            {
+
+                comments.map((comment)=> {
+                    return (
+                        <CommentView comment={comment} key={comment.id}/>
+                    )
+                })
+
+            }
         </Card>
         );
     }
@@ -65,9 +77,16 @@ const mapDispatchToProps = (dispatch) => {
         onEditPostClicked : bindActionCreators(onEditPostClicked, dispatch),
         updateUpVotePost : bindActionCreators(updateUpVotePost, dispatch),
         updateDownVotePost : bindActionCreators(updateDownVotePost, dispatch),
-        deletePostOnServer : bindActionCreators(deletePostOnServer, dispatch)
+        deletePostOnServer : bindActionCreators(deletePostOnServer, dispatch),
+        getCommentsFromServer : bindActionCreators(getCommentsFromServer, dispatch)
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        comments : state.comments
     }
 }
 
 
-export default connect(null,mapDispatchToProps) (PostView);
+export default connect(mapStateToProps,mapDispatchToProps) (PostView);
