@@ -42,8 +42,6 @@ class CommentView extends React.Component {
                     <ActionThumbDown />
                 </FloatingActionButton>
             </CardActions>
-
-
         </Card>
         );
     }

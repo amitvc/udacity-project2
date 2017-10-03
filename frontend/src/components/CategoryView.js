@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import {Card, CardHeader} from 'material-ui/Card';
 
 import  PostView from './PostView';
-//import CommentView from './CommentView';
+import CommentView from './CommentView';
 
 
 

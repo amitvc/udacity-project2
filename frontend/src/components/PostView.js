@@ -36,6 +36,7 @@ class PostView extends React.Component {
         const {post} = this.props;
         const timeAgo = TimeAgo();
         const {comments} = this.props.comments;
+        console.log("Post ID " + post.id + " comments " + comments);
         return (
         <Card>
             <CardHeader title={`Post : ${post.title}`}/>
@@ -58,7 +59,6 @@ class PostView extends React.Component {
                 </FloatingActionButton>
             </CardActions>
             {
-
                 comments.map((comment)=> {
                     return (
                         <CommentView comment={comment} key={comment.id}/>
