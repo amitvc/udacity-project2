@@ -7,17 +7,24 @@ import {Card, CardText,CardActions} from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
+import {onEditCommentClicked} from '../actions/CommentsAction';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import ActionUpdate from 'material-ui/svg-icons/action/update';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import TimeAgo from 'time-ago';
 
 
 class CommentView extends React.Component {
 
+    onEditClicked() {
+        const {comment} = this.props;
+        this.props.onEditCommentClicked(comment);
+    }
+
     render(){
         let timeAgo = TimeAgo();
-        const {comment} = this.props;
+        const {comment, onEditCommentClicked} = this.props;
         return (
         <Card>
             <CardText>
@@ -26,6 +33,9 @@ class CommentView extends React.Component {
             </CardText>
             <CardActions>
                 <FloatingActionButton
+                    onClick={() => {
+                        this.onEditClicked();
+                    }}
                     mini>
                     <ActionUpdate />
                 </FloatingActionButton>
@@ -33,18 +43,18 @@ class CommentView extends React.Component {
                     mini>
                     <ActionDelete />
                 </FloatingActionButton>
-                <FloatingActionButton
-                    mini>
-                    <ActionThumbUp />
-                </FloatingActionButton>
-                <FloatingActionButton
-                    mini>
-                    <ActionThumbDown />
-                </FloatingActionButton>
             </CardActions>
         </Card>
         );
     }
 }
 
-export default connect(null,null) (CommentView);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onEditCommentClicked : bindActionCreators(onEditCommentClicked, dispatch)
+    }
+}
+
+
+
+export default connect(null,mapDispatchToProps) (CommentView);

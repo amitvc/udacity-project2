@@ -5,13 +5,17 @@
 import React from 'react';
 import Category from '../components/CategoryView';
 import {fetchPostsByCategory} from '../actions/CategoriesAction';
-import {openCreateNewPostDialog} from '../actions/PostsAction';
+import {openCreateNewPostDialog, sortPostByVoteScore, sortPostByTimeStamp} from '../actions/PostsAction';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import PostAddButton from '../components/PostAddButton';
 import PostSortButton from '../components/PostSortButton';
 import EditPostDialog from '../components/EditPostDialog';
 import CreatePostDialog from '../components/CreatePostDialog';
+import EditCommentDialog from '../components/EditCommentDialog';
+import AddCommentDialog from '../components/AddCommentDialog';
+
+import {SORT_BY_VOTES_SCORE, SORT_BY_TIMESTAMP} from '../actions/Constants';
 
 
 
@@ -28,7 +32,7 @@ class CategoriesContainer extends React.Component {
 
 
     render() {
-        const {posts, selectedCategory, openPostCreateDialogFlag, openPostEditDialogFlag,openCreateNewPostDialog} = this.props;
+        const {posts, selectedCategory, openPostCreateDialogFlag, openPostEditDialogFlag,openCreateNewPostDialog,openCommentEditDialogFlag,openCommentAddDialogFlag} = this.props;
 
         return (
             <div>
@@ -37,6 +41,8 @@ class CategoriesContainer extends React.Component {
                         <Category category={selectedCategory} numberOfPosts={posts.length} posts={posts}/>
                         <EditPostDialog open={openPostEditDialogFlag}/>
                         <CreatePostDialog open={openPostCreateDialogFlag}/>
+                        <EditCommentDialog open={openCommentEditDialogFlag}/>
+                        <AddCommentDialog open={openCommentAddDialogFlag}/>
                         <PostAddButton
                             openCreatePostDialog={()=>{
                                 openCreateNewPostDialog();
@@ -48,11 +54,13 @@ class CategoriesContainer extends React.Component {
                         <PostSortButton style={{marginRight: 22,
                             position: 'fixed',
                             bottom: 25,
-                            right: 85}}/>
+                            right: 85}}
+                            sort={SORT_BY_TIMESTAMP}/>
                         <PostSortButton style={{marginRight: 22,
                             position: 'fixed',
                             bottom: 25,
-                            right: 145}}/>
+                            right: 145}}
+                            sort={SORT_BY_VOTES_SCORE}/>
                     </div>
 
                 }
@@ -73,6 +81,8 @@ const mapStateToProps =  (state) => {
         posts : state.posts.posts,
         openPostEditDialogFlag: state.posts.openPostEditDialogFlag,
         openPostCreateDialogFlag: state.posts.openPostCreateDialogFlag,
+        openCommentEditDialogFlag:state.comments.openCommentEditDialogFlag,
+        openCommentAddDialogFlag: state.comments.openCommentAddDialogFlag,
         author: state.posts.author,
         body : state.posts.body,
         title : state.posts.title

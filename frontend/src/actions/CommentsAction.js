@@ -4,10 +4,25 @@
 
 // API calls needed to make server requests to update, create, delete comments
 import {editComment, createComment, voteComment, getComments, deleteComment} from '../api';
-import {UPDATE_EXISTING_COMMENT, DELETE_COMMENT, CREATE_NEW_COMMENT, UP_VOTE_COMMENT, DOWN_VOTE_COMMENT, LOAD_COMMENTS} from './Constants';
+import {UPDATE_EXISTING_COMMENT, DELETE_COMMENT,
+        CREATE_NEW_COMMENT,COMMENT_DIALOG_CLOSED_CLICKED,
+        LOAD_COMMENTS,EDIT_COMMENT_CLICKED,OPEN_CREATE_COMMENT_DIALOG
+        } from './Constants';
 
 
 
+
+export const onCommentDialogClosed = () => {
+    return {
+        type: COMMENT_DIALOG_CLOSED_CLICKED
+    }
+}
+
+export const onCreateNewCommentButtonClicked = () => {
+    return {
+        type:OPEN_CREATE_COMMENT_DIALOG
+    }
+}
 
 export const updateCommentOnServer = (comment) => dispatch => {
     editComment(comment.id, comment).then( comment => {
@@ -35,17 +50,6 @@ export const createNewComment = (comment) => {
     }
 }
 
-export const upVoteCommentOnServer = (id) => dispatch => {
-    voteComment(id, 'upVote').then( comment => {
-        dispatch(updateComment(comment));
-    });
-}
-
-export const downVoteCommentOnServer = (id) => dispatch => {
-    voteComment(id, 'downVote').then( comment => {
-       dispatch(updateComment(comment));
-    });
-}
 
 export const deleteCommentOnServer = (id) => dispatch => {
     deleteComment(id).then(() => {
@@ -70,6 +74,13 @@ export const loadComments = (comments) => {
     return {
         type: LOAD_COMMENTS,
         comments
+    }
+}
+
+export const onEditCommentClicked = (comment) => {
+    return {
+        type: EDIT_COMMENT_CLICKED,
+        comment
     }
 }
 

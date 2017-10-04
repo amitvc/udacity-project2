@@ -11,6 +11,7 @@ import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {onEditPostClicked, updateUpVotePost, updateDownVotePost, deletePostOnServer} from '../actions/PostsAction';
+import {onCreateNewCommentButtonClicked} from '../actions/CommentsAction';
 import {getCommentsFromServer} from '../actions/CommentsAction';
 import CommentView from './CommentView';
 import TimeAgo from 'time-ago';
@@ -27,6 +28,10 @@ class PostView extends React.Component {
         this.props.deletePostOnServer(this.props.post.id);
     }
 
+    postCommentButtonClicked = () => {
+        this.props.onCreateNewCommentButtonClicked();
+    }
+
     componentWillMount () {
         this.props.getCommentsFromServer(this.props.post.id);
     }
@@ -36,7 +41,6 @@ class PostView extends React.Component {
         const {post} = this.props;
         const timeAgo = TimeAgo();
         const {comments} = this.props.comments;
-        console.log("Post ID " + post.id + " comments " + comments);
         return (
         <Card>
             <CardHeader title={`Post : ${post.title}`}/>
@@ -49,6 +53,7 @@ class PostView extends React.Component {
             <CardActions>
                 <FlatButton label="Edit post" onClick={this.onEditClicked}/>
                 <FlatButton label="Delete post" onClick={this.onDeleteClicked}/>
+                <FlatButton label="Post Comment" onClick={this.postCommentButtonClicked}/>
                 <FloatingActionButton
                     mini onClick={() => this.props.updateUpVotePost(post.id)}>
                     <ActionThumbUp />
@@ -64,7 +69,6 @@ class PostView extends React.Component {
                         <CommentView comment={comment} key={comment.id}/>
                     )
                 })
-
             }
         </Card>
         );
@@ -78,7 +82,8 @@ const mapDispatchToProps = (dispatch) => {
         updateUpVotePost : bindActionCreators(updateUpVotePost, dispatch),
         updateDownVotePost : bindActionCreators(updateDownVotePost, dispatch),
         deletePostOnServer : bindActionCreators(deletePostOnServer, dispatch),
-        getCommentsFromServer : bindActionCreators(getCommentsFromServer, dispatch)
+        getCommentsFromServer : bindActionCreators(getCommentsFromServer, dispatch),
+        onCreateNewCommentButtonClicked : bindActionCreators(onCreateNewCommentButtonClicked, dispatch)
     }
 }
 
