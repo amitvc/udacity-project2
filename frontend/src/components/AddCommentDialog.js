@@ -20,7 +20,7 @@ class AddCommentDialog extends React.Component {
 
     render() {
 
-        const {openCommentAddDialogFlag,onCommentDialogClosed, createNewCommentOnServer , postId} = this.props;
+        const {openCommentAddDialogFlag,onCommentDialogClosed, createNewCommentOnServer , parentId} = this.props;
 
         return (
             <Dialog
@@ -54,7 +54,7 @@ class AddCommentDialog extends React.Component {
                         const comment = {
                             author:this.refs.author.getValue(),
                             body: this.refs.body.getValue(),
-                            parentId:postId
+                            parentId:parentId
                         }
                         console.log("About to create comment " +JSON.stringify(comment));
                         createNewCommentOnServer(comment);
@@ -73,7 +73,7 @@ class AddCommentDialog extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        postId : state.comments.postId,
+        parentId : state.comments.parentId,
         openCommentAddDialogFlag : state.comments.openCommentAddDialogFlag
     }
 }

@@ -7,7 +7,7 @@ import {Card, CardText,CardActions} from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
-import {onEditCommentClicked} from '../actions/CommentsAction';
+import {onEditCommentClicked, updateCommentOnServer,deleteCommentOnServer} from '../actions/CommentsAction';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import ActionUpdate from 'material-ui/svg-icons/action/update';
 import {bindActionCreators} from 'redux';
@@ -18,13 +18,18 @@ import TimeAgo from 'time-ago';
 class CommentView extends React.Component {
 
     onEditClicked() {
-        const {comment} = this.props;
-        this.props.onEditCommentClicked(comment);
+        const {comment,onEditCommentClicked} = this.props;
+        onEditCommentClicked(comment);
+    }
+
+    onDeleteComment() {
+        const {comment, deleteCommentOnServer} = this.props;
+        deleteCommentOnServer(comment.id);
     }
 
     render(){
         let timeAgo = TimeAgo();
-        const {comment, onEditCommentClicked} = this.props;
+        const {comment} = this.props;
         return (
         <Card>
             <CardText>
@@ -40,6 +45,9 @@ class CommentView extends React.Component {
                     <ActionUpdate />
                 </FloatingActionButton>
                 <FloatingActionButton
+                    onClick={() => {
+                        this.onDeleteComment();
+                    }}
                     mini>
                     <ActionDelete />
                 </FloatingActionButton>
@@ -51,7 +59,9 @@ class CommentView extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onEditCommentClicked : bindActionCreators(onEditCommentClicked, dispatch)
+        onEditCommentClicked : bindActionCreators(onEditCommentClicked, dispatch),
+        updateCommentOnServer : bindActionCreators(updateCommentOnServer, dispatch),
+        deleteCommentOnServer: bindActionCreators(deleteCommentOnServer, dispatch)
     }
 }
 

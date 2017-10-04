@@ -21,7 +21,7 @@ import {bindActionCreators} from 'redux';
 class EditCommentDialog extends React.Component {
 
     render() {
-        const {id, postId,author, body, openCommentEditDialogFlag, onCommentDialogClosed, updatePostOnServer}  = this.props;
+        const {id, parentId,author, body, openCommentEditDialogFlag, onCommentDialogClosed, updateCommentOnServer}  = this.props;
 
         return (
             <Dialog
@@ -52,14 +52,13 @@ class EditCommentDialog extends React.Component {
                     label='Submit'
                     primary={true}
                     keyboardFocused={true}
-                    /**
-                     *  onClick={() => {
+                    onClick={() => {
                      const comment = {id,
+                     parentId,
                      author:this.refs.author.getValue(),
                      body: this.refs.body.getValue()}
                      updateCommentOnServer(comment);
                      }}
-                     */
                 />
                 <RaisedButton
                     label='Cancel'
@@ -77,7 +76,7 @@ const mapStateToProps =  (state) => {
         openCommentEditDialogFlag: state.comments.openCommentEditDialogFlag,
         author : state.comments.author,
         body: state.comments.body,
-        postId : state.comments.postId,
+        parentId : state.comments.parentId,
         id: state.comments.id,
         voteScore : state.comments.voteScore
     };

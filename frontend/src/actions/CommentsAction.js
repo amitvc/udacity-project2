@@ -3,7 +3,7 @@
  */
 
 // API calls needed to make server requests to update, create, delete comments
-import {editComment, createComment, voteComment, getComments, deleteComment} from '../api';
+import {editComment, createComment, getComments, deleteComment} from '../api';
 import {UPDATE_EXISTING_COMMENT, DELETE_COMMENT,
         CREATE_NEW_COMMENT,COMMENT_DIALOG_CLOSED_CLICKED,
         LOAD_COMMENTS,EDIT_COMMENT_CLICKED,OPEN_CREATE_COMMENT_DIALOG
@@ -18,14 +18,15 @@ export const onCommentDialogClosed = () => {
     }
 }
 
-export const onCreateNewCommentButtonClicked = () => {
+export const onCreateNewCommentButtonClicked = (parentId) => {
     return {
-        type:OPEN_CREATE_COMMENT_DIALOG
+        type:OPEN_CREATE_COMMENT_DIALOG,
+        parentId
     }
 }
 
 export const updateCommentOnServer = (comment) => dispatch => {
-    editComment(comment.id, comment).then( comment => {
+    editComment(comment.id, comment.body).then( comment => {
         dispatch(updateComment(comment));
     });
 }

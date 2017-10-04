@@ -12,7 +12,7 @@ const initialCommentsState =  {
     openCommentEditDialogFlag : false,
     openCommentAddDialogFlag : false,
     id: "",
-    postId:"",
+    parentId:"",
     author:"",
     body:"",
     voteScore:1
@@ -28,12 +28,28 @@ function comments (state = initialCommentsState, action) {
                 comments: action.comments
             };
 
+        case UPDATE_EXISTING_COMMENT:
+            let newEditComments = state.comments.filter((comment) => comment.id !== action.comment.id);
+            newEditComments.push(action.comment);
+            return {
+                ...state,
+                openCommentEditDialogFlag:false,
+                comments: newEditComments
+            };
+
+        case DELETE_COMMENT:
+            let leftOverComments = state.comments.filter((comment) => comment.id !== action.id);
+            return {
+                ...state,
+                comments: leftOverComments
+            };
+
         case EDIT_COMMENT_CLICKED:
             return {
                 ...state,
                 openCommentEditDialogFlag: true,
                 id:action.comment.id,
-                postId: action.comment.postId,
+                parentId: action.comment.parentId,
                 author : action.comment.author,
                 body : action.comment.body,
                 voteScore : action.comment.voteScore
@@ -48,9 +64,19 @@ function comments (state = initialCommentsState, action) {
         case OPEN_CREATE_COMMENT_DIALOG:
             return {
                 ...state,
-                openCommentAddDialogFlag:true
+                openCommentAddDialogFlag:true,
+                parentId: action.parentId
 
             };
+        case CREATE_NEW_COMMENT :
+            let newComments = state.comments.filter((comment) => comment.id !== action.comment.id);
+            newComments.push(action.comment);
+            return {
+                ...state,
+                openCommentAddDialogFlag:false,
+                comments: newComments
+            };
+
 
         default:
             return state;

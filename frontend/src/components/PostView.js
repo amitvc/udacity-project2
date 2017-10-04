@@ -29,7 +29,7 @@ class PostView extends React.Component {
     }
 
     postCommentButtonClicked = () => {
-        this.props.onCreateNewCommentButtonClicked();
+        this.props.onCreateNewCommentButtonClicked(this.props.post.id);
     }
 
     componentWillMount () {
