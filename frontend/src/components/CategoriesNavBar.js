@@ -30,7 +30,7 @@ class CategoriesNavBar extends React.Component {
         if(categories === undefined || categories.length === 0) {
             return (
                 <nav>
-                    <List className="nav-side-bar"/>
+                    <List className="nav-side-bar" key="None"/>
                 </nav>
             )
         }
@@ -40,8 +40,8 @@ class CategoriesNavBar extends React.Component {
                 {
                     categories.map((cat) => {
                         return (
-                            <ListItem key={cat.name} primaryText={cat.name} onClick={this.onCategoryChange}/>
-                        );
+                                <ListItem key={cat.name} primaryText={cat.name} onClick={this.onCategoryChange}/>
+                                );
                     })
 
                 }

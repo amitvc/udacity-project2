@@ -8,7 +8,7 @@ import {LOAD_CATEGORIES,LOAD_SELECTED_CATEGORY} from '../actions/Constants';
 
 const initialCategoriesState = {
     selectedCategory: null,
-    categories: []
+    categories: [{name:'All Posts', path:'All Posts'}]
 };
 
 
@@ -17,9 +17,14 @@ function categories (state = initialCategoriesState, action) {
     switch (action.type) {
         case LOAD_CATEGORIES:
             let {categories} = action;
+            let newCategories = state.categories.filter((cat) => {return cat.name !== 'All Posts'});
+            newCategories.push({name:'All Posts', path:'All Posts'});
+            action.categories.forEach((cat) => {
+               newCategories.push(cat);
+            });
             return {
                 ...state,
-                categories: categories
+                categories: newCategories
             };
 
 

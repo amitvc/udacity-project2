@@ -32,14 +32,11 @@ const sortPostsBy = (posts, option) => {
              let p = [...posts].sort((a, b) => {
                 return b.voteScore - a.voteScore;
             });
-            console.log(p, "sorted");
-
             return p;
         case SORT_BY_TIMESTAMP:
             p = [...posts].sort((a, b) => {
                 return b.timestamp - a.timestamp;
             });
-            console.log(p, "sorted");
             return p;
         default:
             return posts;

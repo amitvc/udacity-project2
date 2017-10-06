@@ -3,7 +3,7 @@
  */
 
 
-import {getCategories, getPostsByCategory} from '../api';
+import {getCategories, getPostsByCategory,getPosts} from '../api';
 import {LOAD_CATEGORIES, LOAD_SELECTED_CATEGORY} from '../actions/Constants';
 import {loadPostsBySelectedCategory} from '../actions/PostsAction';
 
@@ -25,12 +25,21 @@ export const displayDefaultCategory = () => (dispatch, getState) => {
 }
 
 export const fetchPostsByCategory = (selectedCategory) => (dispatch) => {
-    return getPostsByCategory(selectedCategory)
-        .then( (posts) =>  {
-            dispatch(selectCategory(selectedCategory));
-            dispatch(loadPostsBySelectedCategory(posts))
 
+    if(selectedCategory === 'All Posts') {
+        return getPosts().then( (posts) => {
+            dispatch(selectCategory('All Posts'));
+            dispatch(loadPostsBySelectedCategory(posts));
         });
+    } else {
+
+        return getPostsByCategory(selectedCategory)
+            .then((posts) => {
+                dispatch(selectCategory(selectedCategory));
+                dispatch(loadPostsBySelectedCategory(posts))
+
+            });
+    }
 }
 
 
