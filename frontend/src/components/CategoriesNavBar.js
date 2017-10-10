@@ -7,6 +7,7 @@ import {List, ListItem} from 'material-ui/List';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchCategories, fetchPostsByCategory,displayDefaultCategory} from '../actions/CategoriesAction';
+import {Link} from 'react-router-dom';
 
 
 /**
@@ -40,7 +41,9 @@ class CategoriesNavBar extends React.Component {
                 {
                     categories.map((cat) => {
                         return (
+                            <Link key={cat.path} to={cat.path}>
                                 <ListItem key={cat.name} primaryText={cat.name} onClick={this.onCategoryChange}/>
+                            </Link>
                                 );
                     })
 

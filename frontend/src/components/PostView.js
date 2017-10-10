@@ -14,6 +14,7 @@ import {onEditPostClicked, updateUpVotePost, updateDownVotePost, deletePostOnSer
 import {onCreateNewCommentButtonClicked} from '../actions/CommentsAction';
 import {getCommentsFromServer} from '../actions/CommentsAction';
 import CommentView from './CommentView';
+
 import TimeAgo from 'time-ago';
 
 
@@ -49,6 +50,7 @@ class PostView extends React.Component {
                 <div>Author : {post.author}</div>
                 <div>Created : {timeAgo.ago(post.timestamp)}</div>
                 <div>Votes : {post.voteScore}</div>
+                <div>{comments.length} Comments</div>
             </CardText>
             <CardActions>
                 <FlatButton label="Edit post" onClick={this.onEditClicked}/>

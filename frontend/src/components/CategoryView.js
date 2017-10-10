@@ -6,10 +6,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Card, CardHeader} from 'material-ui/Card';
-
 import  PostView from './PostView';
-import CommentView from './CommentView';
-
+import PostDetailView from './PostDetailView';
+import {Route} from 'react-router-dom';
 
 
 /**
@@ -40,8 +39,9 @@ class CategoryView extends React.Component {
                 {
                     posts.map((post) => {
                         return (
-                            <PostView post={post} key={post.id}>
-                            </PostView>
+                            <div key={post.id}>
+                                <PostView post={post} key={post.id}/>
+                            </div>
                         );
                     })
 

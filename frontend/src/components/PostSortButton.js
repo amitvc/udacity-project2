@@ -5,7 +5,6 @@
 import React from 'react';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentSort from 'material-ui/svg-icons/content/sort';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {sortPostByTimeStamp, sortPostByVoteScore} from '../actions/PostsAction';
 import {SORT_BY_VOTES_SCORE, SORT_BY_TIMESTAMP} from '../actions/Constants';

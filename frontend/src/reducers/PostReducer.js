@@ -6,7 +6,6 @@ import {LOAD_SELECTED_CATEGORY_POSTS,
         UP_VOTE_POST,DOWN_VOTE_POST,
         UPDATE_POST, DELETE_POST,
         CREATE_NEW_POST, OPEN_CREATE_POST_DIALOG, SORT_BY_TIMESTAMP, SORT_BY_VOTES_SCORE} from '../actions/Constants';
-import {votePost} from '../api/index'
 
 const initialPostState =  {
     posts : [],

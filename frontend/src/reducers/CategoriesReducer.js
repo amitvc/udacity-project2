@@ -16,7 +16,6 @@ function categories (state = initialCategoriesState, action) {
 
     switch (action.type) {
         case LOAD_CATEGORIES:
-            let {categories} = action;
             let newCategories = state.categories.filter((cat) => {return cat.name !== 'All Posts'});
             newCategories.push({name:'All Posts', path:'All Posts'});
             action.categories.forEach((cat) => {

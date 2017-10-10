@@ -10,10 +10,9 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
 import thunkMiddleware from 'redux-thunk'
-//import { createLogger } from 'redux-logger'
 import registerServiceWorker from './registerServiceWorker';
+import { BrowserRouter } from 'react-router-dom'
 
-//const loggerMiddleware = createLogger();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -31,15 +30,17 @@ const store = createStore(
 
 const MainApp = () => {
     return (
-        <div>
-            <Header/>
-            <div className="flex-container">
-                <CategoriesNavBar  className="side-nav"/>
-                <div className="content">
-                    <CategoriesContainer />
-                </div>
+        <BrowserRouter>
+            <div>
+                <Header/>
+                    <div className="flex-container">
+                        <CategoriesNavBar  className="side-nav"/>
+                        <div className="content">
+                            <CategoriesContainer />
+                        </div>
+                    </div>
             </div>
-        </div>
+        </BrowserRouter>
     )
 }
 

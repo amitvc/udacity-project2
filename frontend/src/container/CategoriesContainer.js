@@ -5,7 +5,7 @@
 import React from 'react';
 import Category from '../components/CategoryView';
 import {fetchPostsByCategory} from '../actions/CategoriesAction';
-import {openCreateNewPostDialog, sortPostByVoteScore, sortPostByTimeStamp} from '../actions/PostsAction';
+import {openCreateNewPostDialog} from '../actions/PostsAction';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import PostAddButton from '../components/PostAddButton';

@@ -5,8 +5,6 @@
 import React from 'react';
 import {Card, CardText,CardActions} from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up';
-import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
 import {onEditCommentClicked, updateCommentOnServer,deleteCommentOnServer} from '../actions/CommentsAction';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import ActionUpdate from 'material-ui/svg-icons/action/update';
