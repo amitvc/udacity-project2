@@ -5,7 +5,8 @@ import {LOAD_SELECTED_CATEGORY_POSTS,
         OPEN_EDIT_POST,POST_DIALOG_CLOSED_CLICKED,
         UP_VOTE_POST,DOWN_VOTE_POST,
         UPDATE_POST, DELETE_POST,
-        CREATE_NEW_POST, OPEN_CREATE_POST_DIALOG, SORT_BY_TIMESTAMP, SORT_BY_VOTES_SCORE} from '../actions/Constants';
+        CREATE_NEW_POST, OPEN_CREATE_POST_DIALOG, SORT_BY_TIMESTAMP,
+        SORT_BY_VOTES_SCORE} from '../actions/Constants';
 
 const initialPostState =  {
     posts : [],
@@ -43,8 +44,10 @@ const sortPostsBy = (posts, option) => {
 }
 
 
+
 function posts (state = initialPostState, action) {
     switch (action.type) {
+
         case LOAD_SELECTED_CATEGORY_POSTS:
             const posts = action.posts;
             return {

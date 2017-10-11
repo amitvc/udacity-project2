@@ -41,7 +41,7 @@ class CategoriesNavBar extends React.Component {
                 {
                     categories.map((cat) => {
                         return (
-                            <Link key={cat.path} to={cat.path}>
+                            <Link key={cat.path} to={`/${cat.path}`}>
                                 <ListItem key={cat.name} primaryText={cat.name} onClick={this.onCategoryChange}/>
                             </Link>
                                 );

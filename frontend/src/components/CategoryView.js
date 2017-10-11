@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import {Card, CardHeader} from 'material-ui/Card';
 import  PostView from './PostView';
 import PostDetailView from './PostDetailView';
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 
 /**
@@ -32,7 +32,7 @@ class CategoryView extends React.Component {
         return (
             <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
                 <CardHeader
-                    title={this.props.category}
+                    title={`Category - ${this.props.category}`}
                     subtitle={`Contains  ${this.props.numberOfPosts}   posts`}
                     subtitleColor="red"
                 />
@@ -40,7 +40,10 @@ class CategoryView extends React.Component {
                     posts.map((post) => {
                         return (
                             <div key={post.id}>
-                                <PostView post={post} key={post.id}/>
+                                <Switch>
+                                    <Route path={`/${this.props.category}`} render={()=><PostView post={post} key={post.id}/>}/>
+                                    <Route exact path={`/${post.category}/${post.id}`} render={()=> <PostDetailView post={post}/>}/>
+                                </Switch>
                             </div>
                         );
                     })

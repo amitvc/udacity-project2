@@ -8,6 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {onEditPostClicked, updateUpVotePost, updateDownVotePost, deletePostOnServer} from '../actions/PostsAction';
@@ -55,6 +56,9 @@ class PostView extends React.Component {
             <CardActions>
                 <FlatButton label="Edit post" onClick={this.onEditClicked}/>
                 <FlatButton label="Delete post" onClick={this.onDeleteClicked}/>
+                <Link to={`/${post.category}/${post.id}`}>
+                    <FlatButton label="Details"/>
+                </Link>
                 <FlatButton label="Post Comment" onClick={this.postCommentButtonClicked}/>
                 <FloatingActionButton
                     mini onClick={() => this.props.updateUpVotePost(post.id)}>
@@ -65,13 +69,13 @@ class PostView extends React.Component {
                     <ActionThumbDown />
                 </FloatingActionButton>
             </CardActions>
-            {
+            {/*{
                 comments.map((comment)=> {
                     return (
                         <CommentView comment={comment} key={comment.id}/>
                     )
                 })
-            }
+            }*/}
         </Card>
         );
     }

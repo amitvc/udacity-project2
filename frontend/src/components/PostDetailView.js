@@ -42,8 +42,8 @@ class PostDetailView extends React.Component {
                 {
                  comments.map((comment)=> {
                  return (
-                 <CommentView comment={comment} key={comment.id}/>
-                 )
+                    <CommentView comment={comment} key={comment.id}/>
+                    )
                  })
                  }
             </Card>

@@ -17,11 +17,27 @@ class CreatePostDialog extends React.Component {
 
 
 
+    isInvalid(post) {
+        let invalid = false;
+        if(!post.author || post.author.trim() === '') {
+            invalid = true;
+        }
+
+        if(!post.title || post.title.trim() === '') {
+            invalid = true;
+        }
+
+        if(!post.body || post.body.trim() === '') {
+            invalid = true;
+        }
+        return invalid;
+    }
+
 
     render() {
 
         const {openPostCreateDialogFlag,onPostDialogClosed, createPostOnServer} = this.props;
-
+        let isInvalid = this.isInvalid;
         return (
             <Dialog
                 title="Create Post"
@@ -63,8 +79,11 @@ class CreatePostDialog extends React.Component {
                             body: this.refs.body.getValue(),
                             category: this.props.selectedCategory
                         }
-                        console.log("About to create post " +JSON.stringify(post));
-                        createPostOnServer(post);
+                        if(!isInvalid(post)) {
+                            createPostOnServer(post);
+                        } else {
+                            alert("Please fill in the details");
+                        }
                     }}
                 />
                 <RaisedButton
@@ -89,7 +108,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onPostDialogClosed: bindActionCreators(onPostDialogClosed, dispatch),
-        createPostOnServer: bindActionCreators(createPostOnServer, dispatch)
+        createPostOnServer: bindActionCreators(createPostOnServer, dispatch),
     }
 }
 
