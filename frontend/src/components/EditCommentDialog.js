@@ -20,9 +20,21 @@ import {bindActionCreators} from 'redux';
  */
 class EditCommentDialog extends React.Component {
 
+    isInvalid(comment) {
+        let invalid = false;
+        if(!comment.author || comment.author.trim() === '') {
+            invalid = true;
+        }
+
+        if(!comment.body || comment.body.trim() === '') {
+            invalid = true;
+        }
+        return invalid;
+    }
+
     render() {
         const {id, parentId,author, body, openCommentEditDialogFlag, onCommentDialogClosed, updateCommentOnServer}  = this.props;
-
+        let isInvalid = this.isInvalid;
         return (
             <Dialog
                 title="Edit Comment"
@@ -58,7 +70,13 @@ class EditCommentDialog extends React.Component {
                      parentId,
                      author:this.refs.author.getValue(),
                      body: this.refs.body.getValue()}
-                     updateCommentOnServer(comment);
+
+                     if(!isInvalid(comment)) {
+                         updateCommentOnServer(comment);
+                     } else {
+                         alert("Body for comment cannot be empty");
+                     }
+
                      }}
                 />
                 <RaisedButton
