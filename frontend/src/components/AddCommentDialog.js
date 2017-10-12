@@ -18,9 +18,22 @@ import {bindActionCreators} from 'redux';
  */
 class AddCommentDialog extends React.Component {
 
+    isInvalid(comment) {
+        let invalid = false;
+        if(!comment.author || comment.author.trim() === '') {
+            invalid = true;
+        }
+
+        if(!comment.body || comment.body.trim() === '') {
+            invalid = true;
+        }
+        return invalid;
+    }
+
     render() {
 
         const {openCommentAddDialogFlag,onCommentDialogClosed, createNewCommentOnServer , parentId} = this.props;
+        let isInvalid = this.isInvalid;
 
         return (
             <Dialog
@@ -56,8 +69,11 @@ class AddCommentDialog extends React.Component {
                             body: this.refs.body.getValue(),
                             parentId:parentId
                         }
-                        console.log("About to create comment " +JSON.stringify(comment));
-                        createNewCommentOnServer(comment);
+                        if(!isInvalid(comment)) {
+                            createNewCommentOnServer(comment);
+                        }else{
+                            alert("Please enter author and body for the comment");
+                        }
                     }}
                 />
                 <RaisedButton
