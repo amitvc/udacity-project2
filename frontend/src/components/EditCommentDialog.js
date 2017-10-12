@@ -36,6 +36,7 @@ class EditCommentDialog extends React.Component {
                     required autoFocus
                     floatingLabelText="Author"
                     defaultValue={author}
+                    disabled
                 />
                 <br/>
                 <TextField
