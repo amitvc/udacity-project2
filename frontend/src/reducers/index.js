@@ -7,8 +7,11 @@ import categories from './CategoriesReducer';
 import posts from './PostReducer';
 import comments from './CommentsReducer';
 
+import { routerReducer } from 'react-router-redux'
+
 export default combineReducers({
     categories,
     posts,
-    comments
+    comments,
+    routing: routerReducer
 });

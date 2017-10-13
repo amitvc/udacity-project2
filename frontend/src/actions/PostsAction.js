@@ -7,7 +7,9 @@ import {LOAD_SELECTED_CATEGORY_POSTS,
         POST_DIALOG_CLOSED_CLICKED,
         UP_VOTE_POST, DOWN_VOTE_POST,
         UPDATE_POST,DELETE_POST,
-        CREATE_NEW_POST, OPEN_CREATE_POST_DIALOG, SORT_BY_TIMESTAMP, SORT_BY_VOTES_SCORE} from './Constants';
+        CREATE_NEW_POST, OPEN_CREATE_POST_DIALOG,
+        SORT_BY_TIMESTAMP, SORT_BY_VOTES_SCORE,
+        POST_DETAILS_CLICKED} from './Constants';
 import {
     votePost,
     editPost,
@@ -15,7 +17,11 @@ import {
     createPost
 } from '../api';
 
-
+export const postDetailsViewClicked = () => {
+    return {
+        type:POST_DETAILS_CLICKED
+    }
+}
 
 export const sortPostByTimeStamp = () => {
     return {

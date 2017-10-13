@@ -11,10 +11,18 @@ import { Provider } from 'react-redux';
 import reducer from './reducers';
 import thunkMiddleware from 'redux-thunk'
 import registerServiceWorker from './registerServiceWorker';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
+import { routerMiddleware } from 'react-router-redux'
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+
+
+const middleware = [
+    thunkMiddleware,
+    routerMiddleware(BrowserRouter)
+]
 
 
 
@@ -22,7 +30,7 @@ const store = createStore(
     reducer,
     composeEnhancers (
         applyMiddleware(
-            thunkMiddleware
+            ...middleware
         )
     )
 )
@@ -30,7 +38,6 @@ const store = createStore(
 
 const MainApp = () => {
     return (
-        <BrowserRouter>
             <div>
                 <Header/>
                     <div className="flex-container">
@@ -40,7 +47,6 @@ const MainApp = () => {
                         </div>
                     </div>
             </div>
-        </BrowserRouter>
     )
 }
 
@@ -48,7 +54,9 @@ const MainApp = () => {
 const App = () => (
     <MuiThemeProvider>
         <Provider store={store}>
-            <MainApp/>
+            <BrowserRouter>
+                <MainApp/>
+            </BrowserRouter>
         </Provider>
     </MuiThemeProvider>
 );

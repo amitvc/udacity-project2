@@ -6,7 +6,7 @@ import {LOAD_SELECTED_CATEGORY_POSTS,
         UP_VOTE_POST,DOWN_VOTE_POST,
         UPDATE_POST, DELETE_POST,
         CREATE_NEW_POST, OPEN_CREATE_POST_DIALOG, SORT_BY_TIMESTAMP,
-        SORT_BY_VOTES_SCORE} from '../actions/Constants';
+        SORT_BY_VOTES_SCORE,POST_DETAILS_CLICKED} from '../actions/Constants';
 
 const initialPostState =  {
     posts : [],
@@ -17,7 +17,8 @@ const initialPostState =  {
     body:"",
     title:"",
     voteScore:1,
-    sortMethod: SORT_BY_TIMESTAMP
+    sortMethod: SORT_BY_TIMESTAMP,
+    postDetailsViewClicked : false,
 }
 
 /**
@@ -47,6 +48,12 @@ const sortPostsBy = (posts, option) => {
 
 function posts (state = initialPostState, action) {
     switch (action.type) {
+
+        case POST_DETAILS_CLICKED:
+            return {
+                ...state,
+                postDetailsViewClicked:true
+            }
 
         case LOAD_SELECTED_CATEGORY_POSTS:
             const posts = action.posts;
@@ -132,6 +139,12 @@ function posts (state = initialPostState, action) {
                 sortMethod: SORT_BY_TIMESTAMP,
                 posts : Array.from(sortPostsBy(state.posts, state.sortMethod))
             };
+
+        case POST_DETAILS_CLICKED:
+        return  {
+            ...state
+        }
+
 
         default:
             return state;

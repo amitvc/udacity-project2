@@ -16,12 +16,7 @@ class PostSortButton extends React.Component {
         return (
             <FloatingActionButton
                 style={this.props.style} onClick={() => {
-                    if(sort === SORT_BY_TIMESTAMP) {
-                        sortPostByTimeStamp();
-                    }
-                    if(sort === SORT_BY_VOTES_SCORE) {
-                        sortPostByVoteScore();
-                    }
+                    sort === SORT_BY_TIMESTAMP ? sortPostByTimeStamp() :sortPostByVoteScore();
             }}>
                 <ContentSort />
             </FloatingActionButton>

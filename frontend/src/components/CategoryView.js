@@ -8,7 +8,10 @@ import PropTypes from 'prop-types';
 import {Card, CardHeader} from 'material-ui/Card';
 import  PostView from './PostView';
 import PostDetailView from './PostDetailView';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch} from 'react-router';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
+
 
 
 /**
@@ -41,8 +44,8 @@ class CategoryView extends React.Component {
                         return (
                             <div key={post.id}>
                                 <Switch>
-                                    <Route exact path={`/${this.props.category}`} render={()=><PostView post={post} key={post.id}/>}/>
-                                    <Route exact path={`/${post.category}/${post.id}`} render={()=> <PostDetailView post={post}/>}/>
+                                    <Route exact path={`/${post.category}`} render={()=><PostView post={post} key={post.id}/>}/>
+                                    <Route exact path={`/${post.category}/${post.id}`} component={()=> <PostDetailView post={post}/>}/>
                                 </Switch>
                             </div>
                         );
@@ -58,4 +61,4 @@ class CategoryView extends React.Component {
     }
 }
 
-export default CategoryView;
+export default withRouter(connect()(CategoryView))

@@ -10,12 +10,21 @@ import FlatButton from 'material-ui/FlatButton';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {onCreateNewCommentButtonClicked} from '../actions/CommentsAction';
+import {withRouter} from 'react-router-dom';
 import {getCommentsFromServer} from '../actions/CommentsAction';
 import CommentView from './CommentView';
 import TimeAgo from 'time-ago';
 
 
 class PostDetailView extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    componentShouldUpdate() {
+        console.log("should");
+    }
 
     postCommentButtonClicked = () => {
         this.props.onCreateNewCommentButtonClicked(this.props.post.id);
@@ -26,7 +35,12 @@ class PostDetailView extends React.Component {
     }
 
 
+
+
     render() {
+
+        console.log(this.props.match);
+
         const {post} = this.props;
         const timeAgo = TimeAgo();
         const {comments} = this.props.comments;
@@ -59,11 +73,12 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({comments, posts}) => {
     return {
-        comments : state.comments
+        comments,
+        posts
     }
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps) (PostDetailView);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps) (PostDetailView))

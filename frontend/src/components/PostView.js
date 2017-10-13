@@ -11,10 +11,13 @@ import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {onEditPostClicked, updateUpVotePost, updateDownVotePost, deletePostOnServer} from '../actions/PostsAction';
+import {onEditPostClicked, updateUpVotePost, updateDownVotePost, deletePostOnServer, postDetailsViewClicked} from '../actions/PostsAction';
 import {onCreateNewCommentButtonClicked} from '../actions/CommentsAction';
 import {getCommentsFromServer} from '../actions/CommentsAction';
-import CommentView from './CommentView';
+import PostDetailView from './PostDetailView';
+import {Route, Switch} from 'react-router';
+
+import {withRouter} from 'react-router-dom';
 
 import TimeAgo from 'time-ago';
 
@@ -38,11 +41,16 @@ class PostView extends React.Component {
         this.props.getCommentsFromServer(this.props.post.id);
     }
 
+    componentDidUpdate() {
+        console.log("componentDidUpdate");
+    }
+
 
     render() {
         const {post} = this.props;
         const timeAgo = TimeAgo();
         const {comments} = this.props.comments;
+        const {postDetailsViewClicked} = this.props;
         return (
         <Card>
             <CardHeader title={`Post : ${post.title}`}/>
@@ -69,13 +77,6 @@ class PostView extends React.Component {
                     <ActionThumbDown />
                 </FloatingActionButton>
             </CardActions>
-            {/*{
-                comments.map((comment)=> {
-                    return (
-                        <CommentView comment={comment} key={comment.id}/>
-                    )
-                })
-            }*/}
         </Card>
         );
     }
@@ -89,15 +90,16 @@ const mapDispatchToProps = (dispatch) => {
         updateDownVotePost : bindActionCreators(updateDownVotePost, dispatch),
         deletePostOnServer : bindActionCreators(deletePostOnServer, dispatch),
         getCommentsFromServer : bindActionCreators(getCommentsFromServer, dispatch),
-        onCreateNewCommentButtonClicked : bindActionCreators(onCreateNewCommentButtonClicked, dispatch)
+        onCreateNewCommentButtonClicked : bindActionCreators(onCreateNewCommentButtonClicked, dispatch),
+        postDetailsViewClicked : bindActionCreators(postDetailsViewClicked, dispatch)
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({comments}) => {
     return {
-        comments : state.comments
+        comments
     }
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps) (PostView);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps) (PostView));
