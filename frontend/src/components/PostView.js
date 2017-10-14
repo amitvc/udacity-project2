@@ -5,18 +5,11 @@ import React from 'react';
 
 import {Card,CardText, CardActions, CardHeader} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up';
-import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {onEditPostClicked, updateUpVotePost, updateDownVotePost, deletePostOnServer, postDetailsViewClicked} from '../actions/PostsAction';
-import {onCreateNewCommentButtonClicked} from '../actions/CommentsAction';
+import {postDetailsViewClicked} from '../actions/PostsAction';
 import {getCommentsFromServer} from '../actions/CommentsAction';
-import PostDetailView from './PostDetailView';
-import {Route, Switch} from 'react-router';
-
 import {withRouter} from 'react-router-dom';
 
 import TimeAgo from 'time-ago';
@@ -24,33 +17,17 @@ import TimeAgo from 'time-ago';
 
 class PostView extends React.Component {
 
-    onEditClicked = () => {
-        const {post} = this.props;
-        this.props.onEditPostClicked(post);
-    }
 
-    onDeleteClicked = () => {
-        this.props.deletePostOnServer(this.props.post.id);
-    }
-
-    postCommentButtonClicked = () => {
-        this.props.onCreateNewCommentButtonClicked(this.props.post.id);
-    }
 
     componentWillMount () {
         this.props.getCommentsFromServer(this.props.post.id);
     }
 
-    componentDidUpdate() {
-        console.log("componentDidUpdate");
-    }
-
 
     render() {
-        const {post, history} = this.props;
+        const {post} = this.props;
         const timeAgo = TimeAgo();
         const {comments} = this.props.comments;
-        const {postDetailsViewClicked} = this.props;
         return (
         <Card>
             <CardHeader title={`Post : ${post.title}`}/>
@@ -62,20 +39,9 @@ class PostView extends React.Component {
                 <div>{comments.length} Comments</div>
             </CardText>
             <CardActions>
-                <FlatButton label="Edit post" onClick={this.onEditClicked}/>
-                <FlatButton label="Delete post" onClick={this.onDeleteClicked}/>
                 <Link to={`/${post.category}/${post.id}`}>
-                    <FlatButton label="Details" onClick={() => { history.push("/s/a")}}/>
+                    <FlatButton label="Details"/>
                 </Link>
-                <FlatButton label="Post Comment" onClick={this.postCommentButtonClicked}/>
-                <FloatingActionButton
-                    mini onClick={() => this.props.updateUpVotePost(post.id)}>
-                    <ActionThumbUp />
-                </FloatingActionButton>
-                <FloatingActionButton
-                    mini onClick={() => this.props.updateDownVotePost(post.id)}>
-                    <ActionThumbDown />
-                </FloatingActionButton>
             </CardActions>
         </Card>
         );
@@ -85,12 +51,7 @@ class PostView extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onEditPostClicked : bindActionCreators(onEditPostClicked, dispatch),
-        updateUpVotePost : bindActionCreators(updateUpVotePost, dispatch),
-        updateDownVotePost : bindActionCreators(updateDownVotePost, dispatch),
-        deletePostOnServer : bindActionCreators(deletePostOnServer, dispatch),
         getCommentsFromServer : bindActionCreators(getCommentsFromServer, dispatch),
-        onCreateNewCommentButtonClicked : bindActionCreators(onCreateNewCommentButtonClicked, dispatch),
         postDetailsViewClicked : bindActionCreators(postDetailsViewClicked, dispatch)
     }
 }

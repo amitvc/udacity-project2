@@ -12,18 +12,23 @@ import {bindActionCreators} from 'redux';
 import {onCreateNewCommentButtonClicked} from '../actions/CommentsAction';
 import {withRouter} from 'react-router-dom';
 import {getCommentsFromServer} from '../actions/CommentsAction';
+import {onEditPostClicked, updateUpVotePost, updateDownVotePost, deletePostOnServer} from '../actions/PostsAction';
+
 import CommentView from './CommentView';
 import TimeAgo from 'time-ago';
-
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ActionThumbUp from 'material-ui/svg-icons/action/thumb-up';
+import ActionThumbDown from 'material-ui/svg-icons/action/thumb-down';
 
 class PostDetailView extends React.Component {
 
-    constructor(props) {
-        super(props);
+    onEditClicked = () => {
+        const {post} = this.props;
+        this.props.onEditPostClicked(post);
     }
 
-    componentShouldUpdate() {
-        console.log("should");
+    onDeleteClicked = () => {
+        this.props.deletePostOnServer(this.props.post.id);
     }
 
     postCommentButtonClicked = () => {
@@ -34,9 +39,6 @@ class PostDetailView extends React.Component {
         this.props.getCommentsFromServer(this.props.post.id);
     }
 
-
-
-
     render() {
 
 
@@ -45,12 +47,25 @@ class PostDetailView extends React.Component {
         const {comments} = this.props.comments;
         return (
             <Card>
-                <CardHeader title={`${post.title}`}/>
+                <CardHeader title={`Title : ${post.title}`}/>
                 <CardText >
-                    <div>{post.body}</div>
+                    <div>Body : {post.body}</div>
+                    <div>Created : {timeAgo.ago(post.timestamp)}</div>
+                    <div>Votes : {post.voteScore}</div>
+
                 </CardText>
                 <CardActions>
+                    <FlatButton label="Edit post" onClick={this.onEditClicked}/>
+                    <FlatButton label="Delete post" onClick={this.onDeleteClicked}/>
                     <FlatButton label="Post Comment" onClick={this.postCommentButtonClicked}/>
+                    <FloatingActionButton
+                        mini onClick={() => this.props.updateUpVotePost(post.id)}>
+                        <ActionThumbUp />
+                    </FloatingActionButton>
+                    <FloatingActionButton
+                        mini onClick={() => this.props.updateDownVotePost(post.id)}>
+                        <ActionThumbDown />
+                    </FloatingActionButton>
                 </CardActions>
                 {
                  comments.map((comment)=> {
@@ -68,7 +83,11 @@ class PostDetailView extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         getCommentsFromServer : bindActionCreators(getCommentsFromServer, dispatch),
-        onCreateNewCommentButtonClicked : bindActionCreators(onCreateNewCommentButtonClicked, dispatch)
+        onEditPostClicked : bindActionCreators(onEditPostClicked, dispatch),
+        updateUpVotePost : bindActionCreators(updateUpVotePost, dispatch),
+        updateDownVotePost : bindActionCreators(updateDownVotePost, dispatch),
+        deletePostOnServer : bindActionCreators(deletePostOnServer, dispatch),
+        onCreateNewCommentButtonClicked : bindActionCreators(onCreateNewCommentButtonClicked, dispatch),
     }
 }
 

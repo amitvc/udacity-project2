@@ -20,7 +20,6 @@ class CategoriesNavBar extends React.Component {
     }
 
     componentWillMount() {
-        console.log("changing");
         this.props.fetchCategories().then(() => {
             this.props.displayDefaultCategory()
         })

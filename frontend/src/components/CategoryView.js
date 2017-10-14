@@ -51,7 +51,6 @@ class CategoryView extends React.Component {
                             </div>
                         );
                     })
-
                 }
             </Card>
         );

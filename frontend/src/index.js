@@ -13,7 +13,7 @@ import thunkMiddleware from 'redux-thunk'
 import registerServiceWorker from './registerServiceWorker';
 import { routerMiddleware,ConnectedRouter } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory';
-import {Route, Switch} from 'react-router';
+import {Route} from 'react-router';
 
 
 

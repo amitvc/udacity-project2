@@ -42,7 +42,7 @@ class CreatePostDialog extends React.Component {
         if(!post.body || post.body.trim() === '') {
             invalid = true;
         }
-        if(post.categorySelected === undefined) {
+        if(post.category === undefined) {
             invalid = true;
         }
         return invalid;
@@ -93,7 +93,7 @@ class CreatePostDialog extends React.Component {
                         onChange={this.handleCategorySelected}>
                     {
                         categories.map((cat) => {
-                            return <MenuItem value={`${cat.path}`} primaryText={`${cat.path}`}/>;
+                            return <MenuItem key={`${cat.path}`} value={`${cat.path}`} primaryText={`${cat.path}`}/>;
                         })
                     }
 

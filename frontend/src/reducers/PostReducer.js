@@ -140,12 +140,6 @@ function posts (state = initialPostState, action) {
                 posts : Array.from(sortPostsBy(state.posts, state.sortMethod))
             };
 
-        case POST_DETAILS_CLICKED:
-        return  {
-            ...state
-        }
-
-
         default:
             return state;
     }
