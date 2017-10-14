@@ -12,7 +12,9 @@ import reducer from './reducers';
 import thunkMiddleware from 'redux-thunk'
 import registerServiceWorker from './registerServiceWorker';
 import { routerMiddleware,ConnectedRouter } from 'react-router-redux'
-import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createBrowserHistory';
+import {Route, Switch} from 'react-router';
+
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -55,8 +57,7 @@ const App = () => (
     <MuiThemeProvider>
         <Provider store={store}>
             <ConnectedRouter history={history}>
-
-                <MainApp/>
+                <Route path="/" component={MainApp}/>
             </ConnectedRouter>
         </Provider>
     </MuiThemeProvider>

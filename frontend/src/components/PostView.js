@@ -48,7 +48,6 @@ class PostView extends React.Component {
 
     render() {
         const {post, history} = this.props;
-        console.log("History ", JSON.stringify(history));
         const timeAgo = TimeAgo();
         const {comments} = this.props.comments;
         const {postDetailsViewClicked} = this.props;

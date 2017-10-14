@@ -16,6 +16,8 @@ import EditCommentDialog from '../components/EditCommentDialog';
 import AddCommentDialog from '../components/AddCommentDialog';
 
 import {SORT_BY_VOTES_SCORE, SORT_BY_TIMESTAMP} from '../actions/Constants';
+import {withRouter} from 'react-router-dom';
+
 
 
 
@@ -98,4 +100,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer));
