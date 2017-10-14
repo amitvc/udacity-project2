@@ -45,7 +45,7 @@ class CategoryView extends React.Component {
                             <div key={post.id}>
                                 <Switch>
                                     <Route exact path={`/${post.category}`} render={()=><PostView post={post} key={post.id}/>}/>
-                                    <Route exact path={`/${post.category}/${post.id}`} component={()=> <PostDetailView post={post}/>}/>
+                                    <Route exact path={`/${post.category}/${post.id}`} render={()=> <PostDetailView post={post}/>}/>
                                 </Switch>
                             </div>
                         );

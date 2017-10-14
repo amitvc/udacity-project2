@@ -98,9 +98,10 @@ export const createNewPost = (post) => {
     }
 }
 
-export const openCreateNewPostDialog = () => {
+export const openCreateNewPostDialog = (categories) => {
     return {
-        type:OPEN_CREATE_POST_DIALOG
+        type:OPEN_CREATE_POST_DIALOG,
+        categories
     }
 }
 

@@ -39,7 +39,6 @@ class PostDetailView extends React.Component {
 
     render() {
 
-        console.log(this.props.match);
 
         const {post} = this.props;
         const timeAgo = TimeAgo();

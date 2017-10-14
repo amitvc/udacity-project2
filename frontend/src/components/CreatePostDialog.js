@@ -8,6 +8,10 @@ import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField';
 import {onPostDialogClosed,createPostOnServer} from '../actions/PostsAction';
 import {bindActionCreators} from 'redux';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
+
 
 
 /**
@@ -15,6 +19,14 @@ import {bindActionCreators} from 'redux';
  */
 class CreatePostDialog extends React.Component {
 
+
+    constructor(props) {
+
+        super(props);
+        this.state = {
+            categorySelected: undefined
+        }
+    }
 
 
     isInvalid(post) {
@@ -30,13 +42,20 @@ class CreatePostDialog extends React.Component {
         if(!post.body || post.body.trim() === '') {
             invalid = true;
         }
+        if(post.categorySelected === undefined) {
+            invalid = true;
+        }
         return invalid;
     }
 
 
+    handleCategorySelected  = (event, index, value) => {
+        this.setState({categorySelected:value})
+    }
+
     render() {
 
-        const {openPostCreateDialogFlag,onPostDialogClosed, createPostOnServer} = this.props;
+        const {openPostCreateDialogFlag,onPostDialogClosed, createPostOnServer, categories} = this.props;
         let isInvalid = this.isInvalid;
         return (
             <Dialog
@@ -68,6 +87,19 @@ class CreatePostDialog extends React.Component {
                     rowsMax={2}
                 />
                 <br/>
+                <SelectField
+                        floatingLabelText="Categories"
+                        value={this.state.categorySelected}
+                        onChange={this.handleCategorySelected}>
+                    {
+                        categories.map((cat) => {
+                            return <MenuItem value={`${cat.path}`} primaryText={`${cat.path}`}/>;
+                        })
+                    }
+
+
+                </SelectField>
+                <br/>
                 <RaisedButton
                     label='Submit'
                     primary={true}
@@ -77,7 +109,7 @@ class CreatePostDialog extends React.Component {
                             author:this.refs.author.getValue(),
                             title: this.refs.title.getValue(),
                             body: this.refs.body.getValue(),
-                            category: this.props.selectedCategory
+                            category: this.state.categorySelected
                         }
                         if(!isInvalid(post)) {
                             createPostOnServer(post);

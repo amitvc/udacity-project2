@@ -13,5 +13,5 @@ export default combineReducers({
     categories,
     posts,
     comments,
-    routing: routerReducer
+    router: routerReducer
 });

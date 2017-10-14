@@ -47,7 +47,8 @@ class PostView extends React.Component {
 
 
     render() {
-        const {post} = this.props;
+        const {post, history} = this.props;
+        console.log("History ", JSON.stringify(history));
         const timeAgo = TimeAgo();
         const {comments} = this.props.comments;
         const {postDetailsViewClicked} = this.props;
@@ -65,7 +66,7 @@ class PostView extends React.Component {
                 <FlatButton label="Edit post" onClick={this.onEditClicked}/>
                 <FlatButton label="Delete post" onClick={this.onDeleteClicked}/>
                 <Link to={`/${post.category}/${post.id}`}>
-                    <FlatButton label="Details"/>
+                    <FlatButton label="Details" onClick={() => { history.push("/s/a")}}/>
                 </Link>
                 <FlatButton label="Post Comment" onClick={this.postCommentButtonClicked}/>
                 <FloatingActionButton

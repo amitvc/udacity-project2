@@ -32,7 +32,7 @@ class CategoriesContainer extends React.Component {
 
 
     render() {
-        const {posts, selectedCategory, openPostCreateDialogFlag, openPostEditDialogFlag,openCreateNewPostDialog,openCommentEditDialogFlag,openCommentAddDialogFlag} = this.props;
+        const {posts, categories, selectedCategory, openPostCreateDialogFlag, openPostEditDialogFlag,openCreateNewPostDialog,openCommentEditDialogFlag,openCommentAddDialogFlag} = this.props;
 
         return (
             <div>
@@ -40,12 +40,12 @@ class CategoriesContainer extends React.Component {
                     <div>
                         <Category category={selectedCategory} numberOfPosts={posts.length} posts={posts}/>
                         <EditPostDialog open={openPostEditDialogFlag}/>
-                        <CreatePostDialog open={openPostCreateDialogFlag}/>
+                        <CreatePostDialog open={openPostCreateDialogFlag} categories={categories.slice(1)}/>
                         <EditCommentDialog open={openCommentEditDialogFlag}/>
                         <AddCommentDialog open={openCommentAddDialogFlag}/>
                         <PostAddButton
                             openCreatePostDialog={()=>{
-                                openCreateNewPostDialog();
+                                openCreateNewPostDialog(categories);
                             }}
                             style={{marginRight: 22,
                             position: 'fixed',
@@ -79,6 +79,7 @@ const mapStateToProps =  (state) => {
     return {
         selectedCategory: state.categories.selectedCategory,
         posts : state.posts.posts,
+        categories : state.categories.categories,
         openPostEditDialogFlag: state.posts.openPostEditDialogFlag,
         openPostCreateDialogFlag: state.posts.openPostCreateDialogFlag,
         openCommentEditDialogFlag:state.comments.openCommentEditDialogFlag,
